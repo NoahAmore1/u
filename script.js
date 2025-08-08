@@ -2573,6 +2573,30 @@ function initEnhancedFormInteractions() {
     const within = sidebar.contains(e.target) || hamburger.contains(e.target);
     if (!within) close();
   });
+  
+  // Close sidebar and scroll to section when any navigation link is clicked
+  const sidebarLinks = sidebar.querySelectorAll('a[href^="#"]');
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+      
+      if (targetElement) {
+        // Close sidebar first
+        close();
+        
+        // Then scroll to the section
+        setTimeout(() => {
+          targetElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+        }, 100); // Small delay to ensure sidebar closes first
+      }
+    });
+  });
+  
   // Prevent default open states
   sidebar.classList.remove('open');
 })(); 
