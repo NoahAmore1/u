@@ -3389,3 +3389,10 @@ header { background: #ffffff; }
 @media (max-width: 768px) {
   .page-loading { display: flex !important; }
 }
+
+@media (max-width: 768px) {
+  /* Loading: show only the logo, no spinner or text */
+  .loading-spinner, .loading-text { display: none !important; }
+  .loading-logo { background: transparent !important; box-shadow: none !important; border: 0 !important; padding: 0 !important; }
+  .page-loading { gap: 0 !important; }
+}
