@@ -3409,3 +3409,15 @@ header { background: #ffffff; }
   }
   .page-loading { gap: 0 !important; padding: 0 !important; background: var(--color-white) !important; }
 }
+
+@media (max-width: 768px) {
+  /* Loading: logo + centered spinner under it; hide text */
+  .loading-text { display: none !important; }
+  .loading-spinner {
+    display: block !important;
+    width: 56px !important;
+    height: 56px !important;
+    margin-top: 16px !important;
+    margin-bottom: 0 !important;
+  }
+}
