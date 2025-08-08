@@ -3025,6 +3025,9 @@ img.loaded {
   .green-image-section { min-height: auto !important; }
   .green-background-image { height: clamp(180px, 40vh, 320px) !important; object-fit: cover !important; }
   .green-image-overlay { padding-top: 12px !important; padding-bottom: 12px !important; row-gap: 8px !important; }
+
+  /* Mobile sidebar close button color: teal */
+  .close-sidebar { color: var(--color-accent) !important; }
 }
 
 /** Sidebar drawer sizing **/
