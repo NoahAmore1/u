@@ -3384,3 +3384,8 @@ header { background: #ffffff; }
   .green-image-overlay { padding-bottom: clamp(44px, 9vh, 96px) !important; }
   .state-vermont-text { margin-top: 8px !important; margin-bottom: 0 !important; }
 }
+
+/* Re-enable loading overlay on mobile */
+@media (max-width: 768px) {
+  .page-loading { display: flex !important; }
+}
