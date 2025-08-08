@@ -2607,18 +2607,17 @@ function initEnhancedFormInteractions() {
   homeLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      const heroSection = document.getElementById('home');
-      if (heroSection) {
-        heroSection.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
-        });
-        
-        // Close mobile sidebar if open
-        const sidebar = document.getElementById('sidebar');
-        if (sidebar && sidebar.classList.contains('open')) {
-          sidebar.classList.remove('open');
-        }
+      
+      // Scroll to the very top of the page to show only the hero section
+      window.scrollTo({ 
+        top: 0, 
+        behavior: 'smooth' 
+      });
+      
+      // Close mobile sidebar if open
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar && sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
       }
     });
   });
