@@ -2554,7 +2554,7 @@ function initEnhancedFormInteractions() {
             
         }, 2000);
     });
-}
+} 
 
 // Mobile sidebar controls (open on hamburger, close on X or outside)
 (function initSidebarControls(){
@@ -2576,6 +2576,29 @@ function initEnhancedFormInteractions() {
   // Prevent default open states
   sidebar.classList.remove('open');
 })(); 
+
+// Ensure home navigation works correctly
+(function ensureHomeNavigation(){
+  const homeLinks = document.querySelectorAll('a[href="#home"]');
+  homeLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const heroSection = document.getElementById('home');
+      if (heroSection) {
+        heroSection.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+        
+        // Close mobile sidebar if open
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar && sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+        }
+      }
+    });
+  });
+})();
 
 // Remove animation/hover JS behavior from Chewey image only
 (function removeCheweyImageAnimations(){
