@@ -3393,6 +3393,19 @@ header { background: #ffffff; }
 @media (max-width: 768px) {
   /* Loading: show only the logo, no spinner or text */
   .loading-spinner, .loading-text { display: none !important; }
-  .loading-logo { background: transparent !important; box-shadow: none !important; border: 0 !important; padding: 0 !important; }
-  .page-loading { gap: 0 !important; }
+  .loading-logo {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    width: min(72vw, 420px) !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: 92vw !important;
+    opacity: 1 !important; /* ensure no global img fade affects the logo */
+  }
+  .page-loading { gap: 0 !important; padding: 0 !important; background: var(--color-white) !important; }
 }
