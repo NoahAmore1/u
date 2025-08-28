@@ -373,6 +373,9 @@ header.scrolled {
   opacity: 0;
   transform: translateX(-20px);
   animation: slideInLogo 0.8s ease 0.7s forwards;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 @keyframes slideInLogo {
