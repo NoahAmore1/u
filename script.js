@@ -2636,17 +2636,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('copyrightYear');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
   
-  // Make logo click go to home (top of page)
+  // Make logo click go to home (hero section)
   const logoLink = document.querySelector('header .logo');
   if (logoLink) {
     logoLink.style.cursor = 'pointer';
     logoLink.addEventListener('click', (e) => {
       e.preventDefault();
-      // Scroll to the very top of the page to show only the hero section
-      window.scrollTo({ 
-        top: 0, 
-        behavior: 'smooth' 
-      });
+      const heroSection = document.getElementById('home');
+      if (heroSection) {
+        // Scroll to the hero section smoothly
+        heroSection.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }
     });
   }
 });
