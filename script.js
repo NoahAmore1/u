@@ -2607,26 +2607,17 @@ function initEnhancedFormInteractions() {
   homeLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      const heroSection = document.getElementById('home');
-      if (heroSection) {
-        // Get header height to account for overlap
-        const header = document.querySelector('header');
-        const headerHeight = header ? header.offsetHeight : 0;
-        
-        // Calculate position to show hero section properly
-        const heroTop = heroSection.offsetTop - headerHeight;
-        
-        // Scroll to hero section with proper positioning
-        window.scrollTo({
-          top: heroTop,
-          behavior: 'smooth'
-        });
-        
-        // Close mobile sidebar if open
-        const sidebar = document.getElementById('sidebar');
-        if (sidebar && sidebar.classList.contains('open')) {
-          sidebar.classList.remove('open');
-        }
+      
+      // Scroll to the very top of the page to show only the hero section
+      window.scrollTo({ 
+        top: 0, 
+        behavior: 'smooth' 
+      });
+      
+      // Close mobile sidebar if open
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar && sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
       }
     });
   });
@@ -2653,17 +2644,10 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const heroSection = document.getElementById('home');
       if (heroSection) {
-        // Get header height to account for overlap
-        const header = document.querySelector('header');
-        const headerHeight = header ? header.offsetHeight : 0;
-        
-        // Calculate position to show hero section properly
-        const heroTop = heroSection.offsetTop - headerHeight;
-        
-        // Scroll to hero section with proper positioning
-        window.scrollTo({
-          top: heroTop,
-          behavior: 'smooth'
+        // Scroll to the hero section smoothly
+        heroSection.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
         });
       }
     });
