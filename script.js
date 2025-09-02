@@ -2604,19 +2604,24 @@ function initEnhancedFormInteractions() {
 // Robust helper: force page to the absolute top (handles various browsers/scroll containers)
 function scrollToTopExactly() {
   try {
+    // Update hash without triggering default jump
     if (location.hash !== '#home') {
       history.replaceState(null, '', '#home');
     }
   } catch (_) {}
 
+  // Try multiple methods to guarantee we reach the absolute top
   const forceTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
   };
 
+  // Immediate
   forceTop();
+  // Next frame
   requestAnimationFrame(forceTop);
+  // Small delayed retries to override competing scroll code
   setTimeout(forceTop, 50);
   setTimeout(forceTop, 150);
 }
@@ -2628,6 +2633,7 @@ function scrollToTopExactly() {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       scrollToTopExactly();
+      // Close mobile sidebar if open
       const sidebar = document.getElementById('sidebar');
       if (sidebar && sidebar.classList.contains('open')) {
         sidebar.classList.remove('open');
@@ -2636,7 +2642,7 @@ function scrollToTopExactly() {
   });
 })();
 
-// Make logo click go to home (top of page)
+// Make logo click go to home (hero section)
 const setupLogoToHome = () => {
   const logoLink = document.querySelector('header .logo');
   if (!logoLink) return;
