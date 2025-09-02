@@ -2806,3 +2806,15 @@ function setupLogoToHome() {
 }
 
 document.addEventListener('DOMContentLoaded', setupLogoToHome);
+
+// Loading overlay control: show on DOM ready, hide after content settles
+(function initSimplePageLoading(){
+  const pageLoading = document.getElementById('pageLoading');
+  if (!pageLoading) return;
+  // Ensure it is visible initially
+  pageLoading.classList.remove('hidden');
+  // Hide after window load or a fallback timeout
+  const hide = () => pageLoading.classList.add('hidden');
+  window.addEventListener('load', () => setTimeout(hide, 400));
+  setTimeout(hide, 3000);
+})();
