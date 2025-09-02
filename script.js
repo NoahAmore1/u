@@ -2601,17 +2601,38 @@ function initEnhancedFormInteractions() {
   sidebar.classList.remove('open');
 })(); 
 
+// Robust helper: force page to the absolute top (handles various browsers/scroll containers)
+function scrollToTopExactly() {
+  try {
+    // Update hash without triggering default jump
+    if (location.hash !== '#home') {
+      history.replaceState(null, '', '#home');
+    }
+  } catch (_) {}
+
+  // Try multiple methods to guarantee we reach the absolute top
+  const forceTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
+  // Immediate
+  forceTop();
+  // Next frame
+  requestAnimationFrame(forceTop);
+  // Small delayed retries to override competing scroll code
+  setTimeout(forceTop, 50);
+  setTimeout(forceTop, 150);
+}
+
 // Ensure home navigation works correctly
 (function ensureHomeNavigation(){
   const homeLinks = document.querySelectorAll('a[href="#home"]');
   homeLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      // Always scroll to the very top so the hero fills the viewport exactly
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      scrollToTopExactly();
       // Close mobile sidebar if open
       const sidebar = document.getElementById('sidebar');
       if (sidebar && sidebar.classList.contains('open')) {
@@ -2628,11 +2649,7 @@ const setupLogoToHome = () => {
   logoLink.style.cursor = 'pointer';
   logoLink.addEventListener('click', (e) => {
     e.preventDefault();
-    // Always scroll to top for an exact hero view
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    scrollToTopExactly();
   });
 };
 
