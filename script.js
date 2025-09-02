@@ -300,7 +300,7 @@ function initApproachSection() {
         rootMargin: '-30px 0px -30px 0px'
     });
     
-
+    // Add accessibility and observe steps
     approachSteps.forEach((step, index) => {
         step.setAttribute('tabindex', '0');
         step.setAttribute('role', 'article');
@@ -2692,74 +2692,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
-// Precise helper: scroll so the hero section is exactly aligned below the header
-function scrollToHeroExactly() {
-  const hero = document.getElementById('home');
-  if (!hero) { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); return; }
-
-  // Neutralize transforms that could visually offset the hero
-  const header = document.querySelector('header');
-  if (header) header.style.transform = 'none';
-  const heroSection = document.querySelector('.hero-section');
-  if (heroSection) heroSection.style.transform = 'none';
-
-  // Compute exact target considering fixed header height
-  const headerHeight = header ? header.offsetHeight : 0;
-  const targetTop = Math.max(0, hero.getBoundingClientRect().top + window.pageYOffset - headerHeight);
-
-  // Temporarily disable global smooth scroll to avoid easing fighting our value
-  const prevHtmlBehavior = document.documentElement.style.scrollBehavior;
-  const prevBodyBehavior = document.body.style.scrollBehavior;
-  document.documentElement.style.scrollBehavior = 'auto';
-  document.body.style.scrollBehavior = 'auto';
-
-  const force = () => {
-    window.scrollTo({ top: targetTop, left: 0, behavior: 'auto' });
-    document.documentElement.scrollTop = targetTop;
-    document.body.scrollTop = targetTop;
-  };
-
-  // Immediate and retries to win against competing listeners/animations
-  force();
-  requestAnimationFrame(force);
-  setTimeout(force, 40);
-  setTimeout(force, 120);
-  setTimeout(() => {
-    // Restore previous behaviors
-    document.documentElement.style.scrollBehavior = prevHtmlBehavior;
-    document.body.style.scrollBehavior = prevBodyBehavior;
-  }, 180);
-
-  // Update URL hash quietly
-  try { if (location.hash !== '#home') history.replaceState(null, '', '#home'); } catch (_) {}
-}
-
-// Ensure home navigation works correctly
-(function ensureHomeNavigation(){
-  const homeLinks = document.querySelectorAll('a[href="#home"]');
-  homeLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      scrollToHeroExactly();
-      // Close mobile sidebar if open
-      const sidebar = document.getElementById('sidebar');
-      if (sidebar && sidebar.classList.contains('open')) {
-        sidebar.classList.remove('open');
-      }
-    });
-  });
-})();
-
-// Make logo click go to home (hero section)
-const setupLogoToHome = () => {
-  const logoLink = document.querySelector('header .logo');
-  if (!logoLink) return;
-  logoLink.style.cursor = 'pointer';
-  logoLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    scrollToHeroExactly();
-  });
-};
-
-document.addEventListener('DOMContentLoaded', setupLogoToHome);
