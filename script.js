@@ -2757,3 +2757,55 @@ const setupLogoToHome = () => {
 };
 
 document.addEventListener('DOMContentLoaded', setupLogoToHome);
+
+// Reliable: jump to hero (top) and win against competing scroll effects
+function goHomeHero() {
+  try { if (location.hash !== '#home') history.replaceState(null, '', '#home'); } catch (_) {}
+
+  const prevHtmlBehavior = document.documentElement.style.scrollBehavior;
+  const prevBodyBehavior = document.body.style.scrollBehavior;
+  document.documentElement.style.scrollBehavior = 'auto';
+  document.body.style.scrollBehavior = 'auto';
+
+  const force = () => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
+  // Immediate and retries (next frame and short delays)
+  force();
+  requestAnimationFrame(force);
+  setTimeout(force, 40);
+  setTimeout(force, 120);
+  setTimeout(() => {
+    document.documentElement.style.scrollBehavior = prevHtmlBehavior;
+    document.body.style.scrollBehavior = prevBodyBehavior;
+  }, 180);
+}
+
+// Ensure home navigation works correctly
+(function ensureHomeNavigation(){
+  const homeLinks = document.querySelectorAll('a[href="#home"]');
+  homeLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      goHomeHero();
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar && sidebar.classList.contains('open')) sidebar.classList.remove('open');
+    });
+  });
+})();
+
+// Make logo click go to home (top of page)
+const setupLogoToHome = () => {
+  const logoLink = document.querySelector('header .logo');
+  if (!logoLink) return;
+  logoLink.style.cursor = 'pointer';
+  logoLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    goHomeHero();
+  });
+};
+
+document.addEventListener('DOMContentLoaded', setupLogoToHome);
