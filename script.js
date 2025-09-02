@@ -2607,30 +2607,36 @@ function initEnhancedFormInteractions() {
   homeLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      const heroSection = document.getElementById('home');
-      if (heroSection) {
-        // Get header height to account for overlap
-        const header = document.querySelector('header');
-        const headerHeight = header ? header.offsetHeight : 0;
-        
-        // Calculate position to show hero section properly
-        const heroTop = heroSection.offsetTop - headerHeight;
-        
-        // Scroll to hero section with proper positioning
-        window.scrollTo({
-          top: heroTop,
-          behavior: 'smooth'
-        });
-        
-        // Close mobile sidebar if open
-        const sidebar = document.getElementById('sidebar');
-        if (sidebar && sidebar.classList.contains('open')) {
-          sidebar.classList.remove('open');
-        }
+      // Always scroll to the very top so the hero fills the viewport exactly
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      // Close mobile sidebar if open
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar && sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
       }
     });
   });
 })();
+
+// Make logo click go to home (hero section)
+const setupLogoToHome = () => {
+  const logoLink = document.querySelector('header .logo');
+  if (!logoLink) return;
+  logoLink.style.cursor = 'pointer';
+  logoLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Always scroll to top for an exact hero view
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+};
+
+document.addEventListener('DOMContentLoaded', setupLogoToHome);
 
 // Remove animation/hover JS behavior from Chewey image only
 (function removeCheweyImageAnimations(){
