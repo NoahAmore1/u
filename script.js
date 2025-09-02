@@ -2795,7 +2795,7 @@ function goHomeHero() {
   });
 })();
 
-function setupLogoToHome() {
+const setupLogoToHome = () => {
   const logoLink = document.querySelector('header .logo');
   if (!logoLink) return;
   logoLink.style.cursor = 'pointer';
@@ -2803,6 +2803,6 @@ function setupLogoToHome() {
     e.preventDefault();
     goHomeHero();
   });
-}
+};
 
 document.addEventListener('DOMContentLoaded', setupLogoToHome);
