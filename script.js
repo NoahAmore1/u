@@ -2773,6 +2773,7 @@ function goHomeHero() {
     document.body.scrollTop = 0;
   };
 
+  // Immediate and retries (next frame and short delays)
   force();
   requestAnimationFrame(force);
   setTimeout(force, 40);
@@ -2783,6 +2784,7 @@ function goHomeHero() {
   }, 180);
 }
 
+// Ensure home navigation works correctly
 (function ensureHomeNavigation(){
   const homeLinks = document.querySelectorAll('a[href="#home"]');
   homeLinks.forEach(link => {
@@ -2795,6 +2797,7 @@ function goHomeHero() {
   });
 })();
 
+// Make logo click go to home (top of page)
 const setupLogoToHome = () => {
   const logoLink = document.querySelector('header .logo');
   if (!logoLink) return;
